@@ -33,9 +33,7 @@ function getCurrentStocks() {
 
 getCurrentStocks();
 
-setInterval(() => {
-  getCurrentStocks();
-}, 60000);
+setInterval(getCurrentStocks, 60000);
 
 const moneyManager = new MoneyManager();
 
@@ -44,9 +42,9 @@ moneyManager.addMoneyCallback = function (data) {
 
     if (response.success === true) {
       ProfileWidget.showProfile(response.data);
-      this.setMessage(data, `Счет успешно пополнен на сумму ${data.amount} ${data.currency}`);
+      this.setMessage(response.success, `Счет успешно пополнен на сумму ${data.amount} ${data.currency}`);
     } else {
-      this.setMessage(data, response.error);
+      this.setMessage(response.success, response.error);
     }
 
   });
@@ -57,9 +55,9 @@ moneyManager.conversionMoneyCallback = function (data) {
 
     if (response.success === true) {
       ProfileWidget.showProfile(response.data);
-      this.setMessage(data, `Успешно конвертирована сумма в размере ${data.fromAmount} ${data.fromCurrency} в ${data.targetCurrency}`);
+      this.setMessage(response.success, `Успешно конвертирована сумма в размере ${data.fromAmount} ${data.fromCurrency} в ${data.targetCurrency}`);
     } else {
-      this.setMessage(data, response.error);
+      this.setMessage(response.success, response.error);
     }
 
   });
@@ -70,9 +68,9 @@ moneyManager.sendMoneyCallback = function (data) {
 
     if (response.success === true) {
       ProfileWidget.showProfile(response.data);
-      this.setMessage(data, `Успешно переведена сумма в размере ${data.amount} ${data.currency} пользователю с id ${data.to}`);
+      this.setMessage(response.success, `Успешно переведена сумма в размере ${data.amount} ${data.currency} пользователю с id ${data.to}`);
     } else {
-      this.setMessage(data, response.error);
+      this.setMessage(response.success, response.error);
     }
 
   });
@@ -99,10 +97,10 @@ favoritesWidget.addUserCallback = function (data) {
 
     if (response.success === true) {
       favoritesClearFillUpdate(response);
-      this.setMessage(data, `Успешно добавлен пользователь ${data.name} с id ${data.id}`);
+      this.setMessage(response.success, `Успешно добавлен пользователь ${data.name} с id ${data.id}`);
     }
     else {
-      this.setMessage(data, response.error);
+      this.setMessage(response.success, response.error);
     }
 
   });
@@ -113,9 +111,9 @@ favoritesWidget.removeUserCallback = function (data) {
 
     if (response.success === true) {
       favoritesClearFillUpdate(response);
-      this.setMessage(data, `Успешно удален пользователь с id ${data}`);
+      this.setMessage(response.success, `Успешно удален пользователь с id ${data}`);
     } else {
-      this.setMessage(data, response.error);
+      this.setMessage(response.success, response.error);
     }
 
   });
